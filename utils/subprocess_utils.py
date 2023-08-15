@@ -20,9 +20,20 @@ class SubProcess:
         else:
             print("Script doesn't exists")
     
-    # run sistem diagnostics on linux os by calling htop
+    # run system diagnostics on linux os by calling htop
     def run_general_diagnostics():
         try:
             subprocess.run(["htop"], check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error running htop: {e}")
+    
+    # check space management in os
+    def check_available_space():
+        command = ["df", "-h"]
+
+        try:
+            exec = subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            print("Standard Output:")
+            print(exec.stdout)
         except subprocess.CalledProcessError as e:
             print(f"Error running htop: {e}")
